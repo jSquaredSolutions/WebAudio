@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-<audio controls>
-  <source src="outfoxing.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-
-<p><strong>Note:</strong> The audio tag is not supported in Internet Explorer 8 and earlier versions.</p>
-
-</body>
-</html>
+    <audio id="aud1" src="outfoxing.mp3" crossorigin="anonymous"></audio>
+    <script type="text/javascript">
+        const audioCtx = new AudioContext();
+        const listener = audioCtx.listener;
+        const audioElement = document.getElementById("aud1");
+        const track = audioCtx.createMediaElementSource(audioElement); 
+        track.connect(audioCtx.destination);
+    </script>

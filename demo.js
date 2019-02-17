@@ -26,7 +26,37 @@ var server = http.createServer(function(request, response) {
                 }  
             });  
             break;  
+            case '/Recording1.m4a':  
+            fs.readFile(__dirname + path, function(error, data) {  
+                if (error) {  
+                    response.writeHead(404);  
+                    response.write(error);  
+                    response.end();  
+                } else {  
+                    response.writeHead(200, {  
+                        'Content-Type': 'text/html'  
+                    });  
+                    response.write(data);  
+                    response.end();  
+                }  
+            });  
+            break;  
             case '/outfoxing.mp3':  
+            fs.readFile(__dirname + path, function(error, data) {  
+                if (error) {  
+                    response.writeHead(404);  
+                    response.write(error);  
+                    response.end();  
+                } else {  
+                    response.writeHead(200, {  
+                        'Content-Type': 'audio/mpeg'  
+                    });  
+                    response.write(data);  
+                    response.end();  
+                }  
+            });  
+            break;  
+            case '/index2.html':  
             fs.readFile(__dirname + path, function(error, data) {  
                 if (error) {  
                     response.writeHead(404);  
