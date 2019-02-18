@@ -7,5 +7,13 @@
         const listener = audioCtx.listener;
         const audioElement = document.getElementById("aud1");
         const track = audioCtx.createMediaElementSource(audioElement); 
-        track.connect(audioCtx.destination);
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = 2
+        track.connect(gainNode).connect(audioCtx.destination);
     </script>
+
+    <!--
+    lines 10 and 11 are new showing how to raise the volume
+     This can also be testing the browser by typing: gainNode.gain.value = .1
+     Remember the range is 0.1 to 2 (2 is max volume) 
+    -->
