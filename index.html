@@ -1,19 +1,66 @@
 <!DOCTYPE html>
 <html>
-<body>
-    <audio id="aud1" src="outfoxing.mp3" crossorigin="anonymous"></audio>
-    <script type="text/javascript">
-        const audioCtx = new AudioContext();
-        const listener = audioCtx.listener;
-        const audioElement = document.getElementById("aud1");
-        const track = audioCtx.createMediaElementSource(audioElement); 
-        const gainNode = audioCtx.createGain();
-        gainNode.gain.value = 2
-        track.connect(gainNode).connect(audioCtx.destination);
-    </script>
 
-    <!--
-    lines 10 and 11 are new showing how to raise the volume
-     This can also be testing the browser by typing: gainNode.gain.value = .1
-     Remember the range is 0.1 to 2 (2 is max volume) 
-    -->
+<body>
+  <audio id="aud1" src="outfoxing.mp3" crossorigin="anonymous"></audio>
+  <script type="text/javascript">
+    const audioCtx = new AudioContext();
+    const listener = audioCtx.listener;
+    // innerwidth is the width of the browser. This changes as the browser window is resized
+    const posX = window.innerWidth / 2;
+    console.log(posX);
+    // innerwidth is the Height of the browser. This changes as the browser window is resized
+    const posY = window.innerHeight / 2;
+    console.log(posY);
+    const posZ = 300;
+    console.log(posZ);
+
+    listener.positionX.value = posX;
+    console.log(listener.positionX.value);
+    listener.positionY.value = posY;
+    console.log(listener.positionY.value);
+    listener.positionZ.value = posZ - 5;
+    console.log(listener.positionZ.value);
+
+    listener.forwardX.value = 0;
+    listener.forwardY.value = 0;
+    listener.forwardZ.value = -1;
+    listener.upX.value = 0;
+    listener.upY.value = 1;
+    listener.upZ.value = 0;
+    const innerCone = 60;
+    const pannerModel = 'HRTF';
+    const distanceModel = 'linear';
+    const maxDistance = 10000;
+    const refDistance = 1;
+    const rollOff = 10;
+    const positionX = posX;
+    const positionY = posY;
+    const positionZ = posZ;
+    const orientationX = 0.0;
+    const orientationY = 0.0;
+    const orientationZ = -1.0;
+
+    const panner = new PannerNode(audioCtx, {
+      panningModel: pannerModel,
+      distanceModel: distanceModel,
+      positionX: positionX,
+      positionY: positionY,
+      positionZ: positionZ,
+      orientationX: orientationX,
+      orientationY: orientationY,
+      orientationZ: orientationZ,
+      refDistance: refDistance,
+      maxDistance: maxDistance,
+      rolloffFactor: rollOff,
+      coneInnerAngle: innerCone,
+      coneOuterAngle: outerCone,
+      coneOuterGain: outerGain
+    })
+
+    const audioElement = document.getElementById("aud1");
+    const track = audioCtx.createMediaElementSource(audioElement);
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = 2
+    track.connect(gainNode).connect(audioCtx.destination);
+  </script>

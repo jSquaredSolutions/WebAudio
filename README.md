@@ -1,4 +1,3 @@
 # WebAudio
-   lines 10 and 11 are new showing how to raise the volume
-     This can also be testing the browser by typing: gainNode.gain.value = .1
-     Remember the range is 0.1 to 2 (2 is max volume) 
+  You need to start the note server with demo dot J's to get this to work 
+
