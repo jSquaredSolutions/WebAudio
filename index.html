@@ -2,65 +2,63 @@
 <html>
 
 <body>
-  <audio id="aud1" src="outfoxing.mp3" crossorigin="anonymous"></audio>
+  <h1>Are you running localhost?</h1>
+  <audio id="aud1" src="buzz.wav" crossorigin="anonymous"></audio>
   <script type="text/javascript">
     const audioCtx = new AudioContext();
     const listener = audioCtx.listener;
     // innerwidth is the width of the browser. This changes as the browser window is resized
-    const posX = window.innerWidth / 2;
-    console.log(posX);
-    // innerwidth is the Height of the browser. This changes as the browser window is resized
-    const posY = window.innerHeight / 2;
-    console.log(posY);
-    const posZ = 300;
-    console.log(posZ);
+    
+    window.innerWidth = 1000;
+    window.innerHeight = 1000;
 
-    listener.positionX.value = posX;
+    listener.positionX.value = 500
     console.log(listener.positionX.value);
-    listener.positionY.value = posY;
+    listener.positionY.value = 500
     console.log(listener.positionY.value);
-    listener.positionZ.value = posZ - 5;
+    listener.positionZ.value = 250
     console.log(listener.positionZ.value);
 
     listener.forwardX.value = 0;
     listener.forwardY.value = 0;
-    listener.forwardZ.value = -1;
+    listener.forwardZ.value = 0;
     listener.upX.value = 0;
-    listener.upY.value = 1;
+    listener.upY.value = 0;
     listener.upZ.value = 0;
-    const innerCone = 60;
     const pannerModel = 'HRTF';
     const distanceModel = 'linear';
     const maxDistance = 10000;
     const refDistance = 1;
     const rollOff = 10;
-    const positionX = posX;
-    const positionY = posY;
-    const positionZ = posZ;
-    const orientationX = 0.0;
-    const orientationY = 0.0;
-    const orientationZ = -1.0;
+    const Pan_positionX = -1000;
+    const Pan_positionY = 1000;
+    const Pan_positionZ = 300;
+    const Pan_orientationX = 0.0;
+    const Pan_orientationY = 0.0;
+    const Pan_orientationZ = -1.0;
 
     const panner = new PannerNode(audioCtx, {
       panningModel: pannerModel,
       distanceModel: distanceModel,
-      positionX: positionX,
-      positionY: positionY,
-      positionZ: positionZ,
-      orientationX: orientationX,
-      orientationY: orientationY,
-      orientationZ: orientationZ,
+      positionX: Pan_positionX,
+      positionY: Pan_positionY,
+      positionZ: Pan_positionZ,
+      orientationX: Pan_orientationX,
+      orientationY: Pan_orientationY,
+      orientationZ: Pan_orientationZ,
       refDistance: refDistance,
       maxDistance: maxDistance,
       rolloffFactor: rollOff,
-      coneInnerAngle: innerCone,
-      coneOuterAngle: outerCone,
-      coneOuterGain: outerGain
+      coneInnerAngle: 20,
+      coneOuterAngle: 20,
+      coneOuterGain: 1 
     })
 
     const audioElement = document.getElementById("aud1");
     const track = audioCtx.createMediaElementSource(audioElement);
-    const gainNode = audioCtx.createGain();
-    gainNode.gain.value = 2
-    track.connect(gainNode).connect(audioCtx.destination);
+    const pannerOptions = {pan:-1}; // 0 for both 1 for right
+    const stereoPanner = new StereoPannerNode(audioCtx, pannerOptions);
+    track.connect(stereoPanner).connect(panner).connect(audioCtx.destination);
   </script>
+
+  
